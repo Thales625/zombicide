@@ -4,22 +4,25 @@ import javax.swing.*;
 public final class Game {
 	int width, height;
 
-	JFrame frame;
-	ImageIcon heroIcon, lockedIcon;
-	Button[][] buttons;
+	Matrix<Button> matrix;
 
-	public Game(int width, int height) {
+	JFrame frame;
+	ImageIcon heroIcon, lockedIcon, chestIcon;
+
+	public Game(final int width, final int height) {
 		this.width = width;
 		this.height = height;
 
+		this.matrix = new Matrix<>(width, height);
+
 		this.heroIcon = new ImageIcon("./assets/hero.png");
 		this.lockedIcon = new ImageIcon("./assets/locked.png");
+		this.chestIcon = new ImageIcon("./assets/chest.png");
 	}
 
 	public void Start() {
 		this.frame = new JFrame("Game");
 		this.frame.setLayout(new GridLayout(this.height, this.width));
-		this.buttons = new Button[this.height][this.width];
 
 		for (int i = 0; i < this.height; i++) {
 			for (int j = 0; j < this.width; j++) {
@@ -33,8 +36,10 @@ public final class Game {
 					}
 				});
 
-				buttons[i][j] = button;
-				this.frame.add(this.buttons[i][j]);
+				// this.matrix[i][j] = button;
+				this.matrix.Set(i, j, button);
+				this.frame.add(this.matrix.Get(i, j));
+				// this.frame.add(this.matrix[i][j]);
 			}
 		}
 
@@ -45,20 +50,20 @@ public final class Game {
 		this.SetHeroPosition(2, 2);
 	}
 
-	public void ClearMatrix() {
+	private void ClearMatrix() {
 		for (int i = 0; i < this.height; i++) {
 			for (int j = 0; j < this.width; j++) {
-				this.buttons[i][j].setIcon(this.lockedIcon);
-				this.buttons[i][j].setEnabled(false);
+				this.matrix.Get(j, i).setIcon(this.lockedIcon);
+				this.matrix.Get(j, i).setEnabled(false);
 			}
 		}
 	}
 
-	public void SetHeroPosition(int x, int y) {
+	private void SetHeroPosition(final int x, final int y) {
 		this.ClearMatrix();
 
-		this.buttons[x][y].setIcon(this.heroIcon);
-		this.buttons[x][y].setEnabled(true);
+		this.matrix.Get(x, y).setIcon(this.heroIcon);
+		this.matrix.Get(x, y).setEnabled(true);
 
 		for (int i : new int[]{y-1, y, y+1}) {
 			if (i < 0 || i >= this.height) continue;
@@ -66,9 +71,8 @@ public final class Game {
 			for (int j : new int[]{x-1, x, x+1}) {
 				if (j < 0 || j >= this.width) continue;
 
-				this.buttons[j][i].setEnabled(true);
+				this.matrix.Get(j, i).setEnabled(true);
 			}
 		}
-
 	}
 }

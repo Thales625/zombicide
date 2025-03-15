@@ -1,0 +1,7 @@
+6 4
+A B C D
+E F G H
+I J K L
+C A S S
+E L V I
+A D O V
