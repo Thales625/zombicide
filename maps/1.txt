@@ -1,0 +1,11 @@
+10 10
+P W - B - - - Z - -
+- W - W ZR - - B - -
+- W - W - - W W - Z
+- W - W - - W W - -
+- - B W - ZC W W - -
+- W W W - - W W ZC -
+Z W - - - Z W W - -
+- W - ZR - B - - - -
+- W W W W W - - W -
+B - - Z - - - - W ZG
